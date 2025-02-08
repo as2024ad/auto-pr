@@ -5,8 +5,8 @@ name: Auto PR for README Update
 
 on:
   schedule:
-    - cron: "58 15 * * *"  # Runs daily at 14:35 UTC
-  workflow_dispatch:  # Allow manual triggering
+    - cron: "58 15 * * *" # Runs daily at 14:35 UTC
+  workflow_dispatch: # Allow manual triggering
 
 jobs:
   check-update:
@@ -17,16 +17,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         #with:
-        #    fetch-depth: 0  # Ensure the full history is fetched        
+        #    fetch-depth: 0  # Ensure the full history is fetched
 
       # Check for changes in the README.md file
-    #   - name: Check for file changes
-    #     run: |
-    #       if git diff --quiet HEAD~1 -- README.txt; then
-    #         echo "has_changes=false" >> $GITHUB_ENV
-    #       else
-    #         echo "has_changes=true" >> $GITHUB_ENV
-    #       fi
+      #   - name: Check for file changes
+      #     run: |
+      #       if git diff --quiet HEAD~1 -- README.txt; then
+      #         echo "has_changes=false" >> $GITHUB_ENV
+      #       else
+      #         echo "has_changes=true" >> $GITHUB_ENV
+      #       fi
 
       - name: Create new branch for update
         run: |
@@ -41,6 +41,8 @@ jobs:
 
       - name: Commit and push changes
         run: |
+          git config user.email "183369419+as2024ad@users.noreply.github.com"
+          git config user.name "A"        
           git add README.txt
           git commit -m "Automated update to README.txt"
           git push origin $BRANCH_NAME
@@ -52,4 +54,3 @@ jobs:
             --body "This PR updates README.txt with a new timestamp." \
             --base main \
             --head $BRANCH_NAME
-
