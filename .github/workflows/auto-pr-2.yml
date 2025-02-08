@@ -1,0 +1,62 @@
+name: Auto PR for README Update
+
+on:
+  schedule:
+    - cron: "35 14 * * *"  # Runs daily at 14:35 UTC
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Ensures we get all history and branches
+
+      # Set up Git and fetch all branches
+      - name: Configure Git and Fetch
+        run: |
+          git config user.email "183369419+as2024ad@users.noreply.github.com"
+          git config user.name "A"
+          git fetch --all  # Fetch all branches to avoid "refspec doesn't match any" error
+          git branch -a  # Debug: List all branches
+
+      # Create a new branch for the changes
+      - name: Create new branch for update
+        run: |
+          BRANCH_NAME="update-readme-$(date +'%Y%m%d%H%M%S')"
+          git checkout -b $BRANCH_NAME
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV  # Store for later steps
+
+      # Append timestamp to README.txt
+      - name: Append timestamp to README.txt
+        run: |
+          echo "Appending update timestamp to README.txt"
+          TIMESTAMP="update-readme-$(date +'%Y%m%d%H%M%S')"
+          echo $TIMESTAMP >> README.txt  # Append to README.txt
+
+      # Commit and push changes if README.txt was updated
+      - name: Commit and push changes
+        run: |
+          git add README.txt
+          git commit -m "Automated update to README.txt"
+          
+          # Debugging: Verify remote
+          git remote -v
+
+          # Push the new branch and set upstream
+          git push -u origin $BRANCH_NAME
+
+      # Create pull request
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --title "Automated update for README.txt" \
+            --body "This PR updates README.txt with a new timestamp." \
+            --base main \
+            --head $BRANCH_NAME
