@@ -2,8 +2,8 @@ name: Auto PR for README Update
 
 on:
   schedule:
-    - cron: "12 15 * * *"  # Run daily at 14:35 UTC
-  workflow_dispatch:  # Allow manual triggering
+    - cron: "22 15 * * *" # Run daily at 14:35 UTC
+  workflow_dispatch: # Allow manual triggering
 
 jobs:
   check-update:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # Fetch last 2 commits for comparison
+          fetch-depth: 2 # Fetch last 2 commits for comparison
 
       - name: Check for README.md changes
         id: check_changes
@@ -24,19 +24,23 @@ jobs:
             echo "has_changes=true" >> $GITHUB_ENV
           fi
 
-      - name: Create branch and PR
-        if: env.has_changes == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use Personal Access Token (PAT)
-        run: |
-          BRANCH_NAME="update-readme-$(date +'%Y%m%d%H%M%S')"
-          git checkout -b $BRANCH_NAME
-          git add README.md
-          git commit -m "Automated update to README.md"
-          git push origin $BRANCH_NAME
+          - name: Create branch and PR
+          if: env.has_changes == 'true'
+          env:
+            GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          run: |
+            BRANCH_NAME="update-readme-$(date +'%Y%m%d%H%M%S')"
+            git checkout -b $BRANCH_NAME
+            
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
+            
+            git add README.md
+            git commit -m "Automated update to README.md"
+            git push origin $BRANCH_NAME
 
-          gh pr create \
-            --title "Automated update for README.md" \
-            --body "This PR updates README.md based on scheduled changes." \
-            --base main \
-            --head $BRANCH_NAME
+            gh pr create \
+              --title "Automated update for README.md" \
+              --body "This PR updates README.md based on scheduled changes." \
+              --base main \
+              --head $BRANCH_NAME
