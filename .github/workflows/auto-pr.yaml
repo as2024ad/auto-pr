@@ -2,99 +2,52 @@ name: Auto PR for README Update
 
 on:
   schedule:
-    - cron: "22 15 * * *" # Run daily at 14:35 UTC
-  workflow_dispatch: # Allow manual triggering
+    - cron: "35 14 * * *"  # Runs daily at 14:35 UTC
+  workflow_dispatch:  # Allow manual triggering
 
 jobs:
   check-update:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2 # Fetch last 2 commits for comparison
+        uses: actions/checkout@v3
 
-        - name: Check for file changes
-          run: |
-            if git diff --quiet HEAD~1 -- README.md; then
-              echo "has_changes=false" >> $GITHUB_ENV
-            else
-              echo "has_changes=true" >> $GITHUB_ENV
-            fi
-        
-        - name: Create branch and PR
-          if: env.has_changes == 'true'
-          env:
-            GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-          run: |
-            BRANCH_NAME="update-readme-$(date +'%Y%m%d%H%M%S')"
-            git checkout -b $BRANCH_NAME
-            
-            # Set Git identity in the current repo context
-            git config user.email "183369419+as2024ad@users.noreply.github.com"
-            git config user.name "A"
-            
-            git add README.md
-            git commit -m "Automated update to README.md"
-            git push origin $BRANCH_NAME
-        
-            # Create PR using GitHub CLI
-            gh pr create \
-              --title "Automated update for README.md" \
-              --body "This PR updates README.md based on scheduled changes." \
-              --base main \
-              --head $BRANCH_NAME
-        
+      # Check for changes in the README.md file
+      - name: Check for file changes
+        run: |
+          if git diff --quiet HEAD~1 -- README.md; then
+            echo "has_changes=false" >> $GITHUB_ENV
+          else
+            echo "has_changes=true" >> $GITHUB_ENV
+          fi
 
+      # Create branch and PR if changes were detected
+      - name: Create branch and PR
+        if: ${{ env.has_changes == 'true' }}  # This condition checks if changes were detected
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          BRANCH_NAME="update-readme-$(date +'%Y%m%d%H%M%S')"
+          git checkout -b $BRANCH_NAME
           
+          # Set Git identity for the commit
+          git config user.email "183369419+as2024ad@users.noreply.github.com"
+          git config user.name "A"
+
+          # Add changes, commit and push the branch
+          git add README.md
+          git commit -m "Automated update to README.md"
+          git push origin $BRANCH_NAME
+
+          # Create the pull request using GitHub CLI
+          gh pr create \
+            --title "Automated update for README.md" \
+            --body "This PR updates README.md based on scheduled changes." \
+            --base main \
+            --head $BRANCH_NAME
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #   - name: Check for README.md changes
-    #     id: check_changes
-    #     run: |
-    #       if git diff --quiet HEAD~1 -- README.md; then
-    #         echo "has_changes=false" >> $GITHUB_ENV
-    #       else
-    #         echo "has_changes=true" >> $GITHUB_ENV
-    #       fi
-
-    #       - name: Create branch and PR
-    #       if: env.has_changes == 'true'
-    #       env:
-    #         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-    #       run: |
-    #         BRANCH_NAME="update-readme-$(date +'%Y%m%d%H%M%S')"
-    #         git checkout -b $BRANCH_NAME
-            
-    #         git config user.email "183369419+as2024ad@users.noreply.github.com"
-    #         git config user.name "A"
-            
-    #         git add README.md
-    #         git commit -m "Automated update to README.md"
-    #         git push origin $BRANCH_NAME
-
-    #         gh pr create \
-    #           --title "Automated update for README.md" \
-    #           --body "This PR updates README.md based on scheduled changes." \
-    #           --base main \
-    #           --head $BRANCH_NAME
