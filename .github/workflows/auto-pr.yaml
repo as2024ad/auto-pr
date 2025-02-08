@@ -2,7 +2,7 @@ name: Auto PR for README Update
 
 on:
   schedule:
-    - cron: "35 14 * * *"  # Runs daily at 14:35 UTC
+    - cron: "50 15 * * *"  # Runs daily at 14:35 UTC
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
