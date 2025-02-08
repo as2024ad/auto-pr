@@ -32,8 +32,8 @@ jobs:
             BRANCH_NAME="update-readme-$(date +'%Y%m%d%H%M%S')"
             git checkout -b $BRANCH_NAME
             
-            git config --local user.email "183369419+as2024ad@users.noreply.github.com"
-            git config --local user.name "A"
+            git config user.email "183369419+as2024ad@users.noreply.github.com"
+            git config user.name "A"
             
             git add README.md
             git commit -m "Automated update to README.md"
