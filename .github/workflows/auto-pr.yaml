@@ -2,7 +2,7 @@ name: Auto PR for README Update
 
 on:
   schedule:
-    - cron: "50 15 * * *"  # Runs daily at 14:35 UTC
+    - cron: "00 16 * * *"  # Runs daily at 14:35 UTC
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
       # Check for changes in the README.md file
       - name: Check for file changes
         run: |
-          if git diff --quiet HEAD~1 -- README.md; then
+          if git diff --quiet HEAD~1 -- README.txt; then
             echo "has_changes=false" >> $GITHUB_ENV
           else
             echo "has_changes=true" >> $GITHUB_ENV
@@ -38,13 +38,13 @@ jobs:
 
           # Add changes, commit and push the branch
           git add README.md
-          git commit -m "Automated update to README.md"
+          git commit -m "Automated update to README.txt"
           git push origin $BRANCH_NAME
 
           # Create the pull request using GitHub CLI
           gh pr create \
             --title "Automated update for README.md" \
-            --body "This PR updates README.md based on scheduled changes." \
+            --body "This PR updates README.txt based on scheduled changes." \
             --base main \
             --head $BRANCH_NAME
 
