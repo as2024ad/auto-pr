@@ -2,7 +2,7 @@ name: Auto PR for README Update
 
 on:
   schedule:
-    - cron: "45 15 * * *" # Run daily at 14:35 UTC
+    - cron: "22 15 * * *" # Run daily at 14:35 UTC
   workflow_dispatch: # Allow manual triggering
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 2 # Fetch last 2 commits for comparison
 
-          - name: Check for file changes
+        - name: Check for file changes
           run: |
             if git diff --quiet HEAD~1 -- README.md; then
               echo "has_changes=false" >> $GITHUB_ENV
@@ -47,7 +47,54 @@ jobs:
               --head $BRANCH_NAME
         
 
+          
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #   - name: Check for README.md changes
+    #     id: check_changes
+    #     run: |
+    #       if git diff --quiet HEAD~1 -- README.md; then
+    #         echo "has_changes=false" >> $GITHUB_ENV
+    #       else
+    #         echo "has_changes=true" >> $GITHUB_ENV
+    #       fi
+
+    #       - name: Create branch and PR
+    #       if: env.has_changes == 'true'
+    #       env:
+    #         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+    #       run: |
+    #         BRANCH_NAME="update-readme-$(date +'%Y%m%d%H%M%S')"
+    #         git checkout -b $BRANCH_NAME
+            
+    #         git config user.email "183369419+as2024ad@users.noreply.github.com"
+    #         git config user.name "A"
+            
+    #         git add README.md
+    #         git commit -m "Automated update to README.md"
+    #         git push origin $BRANCH_NAME
+
+    #         gh pr create \
+    #           --title "Automated update for README.md" \
+    #           --body "This PR updates README.md based on scheduled changes." \
+    #           --base main \
+    #           --head $BRANCH_NAME
