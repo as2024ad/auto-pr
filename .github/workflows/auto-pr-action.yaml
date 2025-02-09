@@ -1,7 +1,7 @@
 # 183369419+as2024ad@users.noreply.github.com
 # A
 
-name: Auto PR for README Update
+name: Auto PR - GH Actions
 
 on:
   schedule:
