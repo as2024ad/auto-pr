@@ -41,7 +41,7 @@ jobs:
       # Commit and push changes if README.txt was updated
       - name: Commit and push changes
         env:
-            GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}      
+            GH_TOKEN: ${{ secrets.PAT_TOKEN }}      
         run: |
           git add README.txt
           git commit -m "Automated update to README.txt"
