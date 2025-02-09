@@ -43,5 +43,5 @@ jobs:
           team-reviewers: |
             developers
             qa-team
-          milestone: 1
+          #milestone: 1
           draft: false
