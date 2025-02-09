@@ -23,10 +23,10 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           commit-message: Update report
-          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          committer: github-actions[bot] <183369419+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: example-patches
+          branch: main
           delete-branch: true
           title: "[Example] Update report"
           body: |
@@ -38,8 +38,8 @@ jobs:
           labels: |
             report
             automated pr
-          assignees: peter-evans
-          reviewers: peter-evans
+          assignees: as2024ad
+          reviewers: as2024ad
           team-reviewers: |
             developers
             qa-team

@@ -1,4 +1,4 @@
-name: Auto PR for README Update - 2
+name: Auto PR for README Update
 
 on:
   schedule:
@@ -31,20 +31,20 @@ jobs:
           git checkout -b $BRANCH_NAME
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV  # Store for later steps
 
-      # Append timestamp to README.txt
-      - name: Append timestamp to README.txt
+      # Append timestamp to README.md
+      - name: Append timestamp to README.md
         run: |
-          echo "Appending update timestamp to README.txt"
+          echo "Appending update timestamp to README.md"
           TIMESTAMP="update-readme-$(date +'%Y%m%d%H%M%S')"
-          echo $TIMESTAMP >> README.txt  # Append to README.txt
+          echo $TIMESTAMP >> README.md  # Append to README.md
 
-      # Commit and push changes if README.txt was updated
+      # Commit and push changes if README.md was updated
       - name: Commit and push changes
         env:
             GH_TOKEN: ${{ secrets.PAT_TOKEN }}      
         run: |
-          git add README.txt
-          git commit -m "Automated update to README.txt"
+          git add README.md
+          git commit -m "Automated update to README.md"
           
           # Debugging: Verify remote
           git remote -v
@@ -58,7 +58,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr create \
-            --title "Automated update for README.txt" \
-            --body "This PR updates README.txt with a new timestamp." \
+            --title "Automated update for README.md" \
+            --body "This PR updates README.md with a new timestamp." \
             --base main \
             --head $BRANCH_NAME
