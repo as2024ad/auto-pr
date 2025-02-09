@@ -38,8 +38,8 @@ jobs:
           labels: |
             report
             automated pr
-          assignees: as2024ad
-          reviewers: as2024ad
+          # assignees: as2024ad
+          # reviewers: as2024ad
           # team-reviewers: |
           #   developers
           #   qa-team
