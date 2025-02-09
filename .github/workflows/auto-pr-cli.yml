@@ -2,7 +2,7 @@ name: Auto PR for README Update - 2
 
 on:
   schedule:
-    - cron: "35 14 * * *"  # Runs daily at 14:35 UTC
+    - cron: "00 00 * * *"  # Runs daily at 14:35 UTC
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
       # Set up Git and fetch all branches
       - name: Configure Git and Fetch
         run: |
-          git config user.email "183369419+as2024ad@users.noreply.github.com"
+          git config user.email "183369419+github-actions[bot]@users.noreply.github.com"
           git config user.name "A"
           git fetch --all  # Fetch all branches to avoid "refspec doesn't match any" error
           git branch -a  # Debug: List all branches
