@@ -9,7 +9,7 @@ name: Auto PR-WORKING-COPY
 
 on:
   schedule:
-    - cron: "00 00 * * *"
+    - cron: "35 14 * * *"
   workflow_dispatch:
 
 # complete the GitHub workflow:
@@ -65,7 +65,7 @@ jobs:
           #committer: github-actions[bot] <183369419+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: create-pull-request/sitemap-123456
+          branch: create-pull-request/sitemap-12345
           delete-branch: false
           title: "Sitemap Change"
           body: |
