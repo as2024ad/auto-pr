@@ -12,12 +12,9 @@ on:
     - cron: "50 14 * * *"
   workflow_dispatch:
 
-# complete the GitHub workflow:
 jobs:
-  createPullRequest:
+  generate-sitemap-auto-pr:
     runs-on: ubuntu-latest
-
-
 
     steps:
       - uses: actions/checkout@v4
@@ -34,7 +31,6 @@ jobs:
             </url>
           </urlset>
           EOL
-        
 
       - name: Move sitemap to target directory
         run: |
