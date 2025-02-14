@@ -44,7 +44,7 @@ jobs:
           EOL
         
 
-      # move the sitemap from ./Utilities to the ./app-directory/wwwroot folder, replacing the sitemap currently in there
+      # move the sitemap from ./Utilities to ./app-directory/wwwroot, replacing the sitemap currently in there
       - name: Move sitemap to target directory
         run: |
           mv -f Utilities/sitemap.xml app-directory/wwwroot/sitemap.xml
@@ -62,11 +62,11 @@ jobs:
         with:
           token: ${{ secrets.PAT_TOKEN }}
           commit-message: Sitemap latest updates
-          committer: github-actions[bot] <183369419+github-actions[bot]@users.noreply.github.com>
+          #committer: github-actions[bot] <183369419+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: create-pull-request/sitemap-1
-          delete-branch: true
+          branch: create-pull-request/sitemap-123456
+          delete-branch: false
           title: "Sitemap Change"
           body: |
             Please review the latest changes to the sitemap.
