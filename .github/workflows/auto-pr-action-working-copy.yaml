@@ -56,7 +56,7 @@ jobs:
           committer: github-actions[bot] <183369419+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: create-pull-request/sitemap
+          branch: create-pull-request/sitemap-test-another-branch
           delete-branch: true
           title: "[Example] Update report"
           body: |
