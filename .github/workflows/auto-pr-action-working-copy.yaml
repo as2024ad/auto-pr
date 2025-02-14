@@ -17,6 +17,8 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
 
+
+
     steps:
       - uses: actions/checkout@v4
 
@@ -34,22 +36,20 @@ jobs:
           EOL
         
 
-      # move the sitemap from ./Utilities to ./app-directory/wwwroot, replacing the sitemap currently in there
       - name: Move sitemap to target directory
         run: |
           mv -f Utilities/sitemap.xml app-directory/wwwroot/sitemap.xml
 
+      # - name: Set dynamic branch name
+      #   run: echo "BRANCH_NAME=create-pull-request/sitemap-$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
-        # make this script work to replace the branch name in peter-evans/create-pull-request@v7
-      - name: Set dynamic branch name
-        run: echo "BRANCH_NAME=create-pull-request/sitemap-$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-
-      - name: Set dynamic title with today's date
-        run: echo "PR_TITLE=Report update $(date '+%A %-dth %B %Y')" >> $GITHUB_ENV
-
+      - name: Set dynamic PR title with today's date
+        run: echo "PR_TITLE=Sitemap change $(date '+%A %-dth %B %Y')" >> $GITHUB_ENV
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
+        env:
+          BRANCH_NAME: create-pull-request/sitemap-${{ github.run_id }}
         with:
           token: ${{ secrets.PAT_TOKEN }}
           commit-message: Sitemap latest updates
