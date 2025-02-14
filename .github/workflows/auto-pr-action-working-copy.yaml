@@ -27,7 +27,7 @@ jobs:
       # - generate a mock sitemap in the ./Utilities folder
       - name: Generate mock sitemap
         run: |
-          mkdir -p Utilities
+          #mkdir -p Utilities
           cat > Utilities/sitemap.xml <<EOL
           <?xml version="1.0" encoding="UTF-8"?>
           <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -38,7 +38,7 @@ jobs:
       # move the sitemap from ./Utilities to the ./app-directory/wwwroot folder, replacing the sitemap currently in there
       - name: Move sitemap to target directory
         run: |
-          mkdir -p ./app-directory/wwwroot
+          #mkdir -p ./app-directory/wwwroot
           mv -f Utilities/sitemap.xml ./app-directory/wwwroot/sitemap.xml
 
 
@@ -51,7 +51,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PAT_TOKEN }}
-          commit-message: Update report
+          commit-message: Update sitemap
           committer: github-actions[bot] <183369419+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: false
