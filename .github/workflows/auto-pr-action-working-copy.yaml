@@ -5,7 +5,7 @@
 # - move the sitemap from ./Utilities to www folder, replacing the sitemap currently in there
 # - update the delete branches setting
 
-name: Auto PR - GH Actions
+name: Auto PR-WORKING-COPY
 
 on:
   schedule:
