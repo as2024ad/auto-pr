@@ -50,9 +50,10 @@ jobs:
           mv -f Utilities/sitemap.xml app-directory/wwwroot/sitemap.xml
 
 
-        # this script works
+        # make this script work to replace the branch name in peter-evans/create-pull-request@v7
       - name: Set dynamic branch name
-        run: echo "create-pull-request/sitemap-$(date +'%Y%m%d%H%M%S')"
+        run: echo "BRANCH_NAME=sitemap-$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+        #run: echo "create-pull-request/sitemap-$(date +'%Y%m%d%H%M%S')"
 
 
 
