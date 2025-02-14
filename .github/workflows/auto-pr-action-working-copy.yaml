@@ -9,7 +9,7 @@ name: Auto PR-WORKING-COPY
 
 on:
   schedule:
-    - cron: "40 14 * * *"
+    - cron: "50 14 * * *"
   workflow_dispatch:
 
 # complete the GitHub workflow:
