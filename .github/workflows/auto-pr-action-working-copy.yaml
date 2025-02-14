@@ -16,19 +16,9 @@ on:
 jobs:
   createPullRequest:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
-
-      # - generate a mock sitemap in the ./Utilities folder
-      # - name: Generate mock sitemap
-      #   run: |
-      #     cat > Utilities/sitemap.xml <<EOL
-      #     <?xml version="1.0" encoding="UTF-8"?>
-      #     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      #       <url><loc>https://example.com/</loc></url>
-      #     </urlset>
-      #     EOL
 
       - name: Generate mock sitemap
         run: |
@@ -52,10 +42,10 @@ jobs:
 
         # make this script work to replace the branch name in peter-evans/create-pull-request@v7
       - name: Set dynamic branch name
-        run: echo "BRANCH_NAME=sitemap-$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-        #run: echo "create-pull-request/sitemap-$(date +'%Y%m%d%H%M%S')"
+        run: echo "BRANCH_NAME=create-pull-request/sitemap-$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
-
+      - name: Set dynamic title with today's date
+        run: echo "PR_TITLE=Report update $(date '+%A %-dth %B %Y')" >> $GITHUB_ENV
 
 
       - name: Create Pull Request
@@ -68,7 +58,7 @@ jobs:
           signoff: false
           branch: ${{ env.BRANCH_NAME }}
           delete-branch: false
-          title: "Sitemap Change"
+          title: ${{ env.PR_TITLE }}
           body: |
             Please review the latest changes to the sitemap.
           # labels: |
