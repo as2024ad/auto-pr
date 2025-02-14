@@ -39,7 +39,7 @@ jobs:
       - name: Move sitemap to target directory
         run: |
           mkdir -p /app-directory/wwwroot
-          mv -f Utilities/sitemap.xml /app-directory/wwwroot/sitemap.xml
+          mv -f Utilities/sitemap.xml ./app-directory/wwwroot/sitemap.xml
 
 
 
