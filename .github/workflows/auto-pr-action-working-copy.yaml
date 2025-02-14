@@ -38,7 +38,7 @@ jobs:
       # move the sitemap from ./Utilities to the ./app-directory/wwwroot folder, replacing the sitemap currently in there
       - name: Move sitemap to target directory
         run: |
-          mkdir -p /app-directory/wwwroot
+          mkdir -p ./app-directory/wwwroot
           mv -f Utilities/sitemap.xml ./app-directory/wwwroot/sitemap.xml
 
 
