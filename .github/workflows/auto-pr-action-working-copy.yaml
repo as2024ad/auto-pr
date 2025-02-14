@@ -16,13 +16,15 @@ on:
 jobs:
   createPullRequest:
     runs-on: ubuntu-latest
+
+
+    env:
+      BRANCH_NAME: create-pull-request/sitemap-$(date +'%Y%m%d%H%M%S')
+
+
+
     steps:
       - uses: actions/checkout@v4
-
-
-
-
-
 
       # - generate a mock sitemap in the ./Utilities folder
       - name: Generate mock sitemap
@@ -44,6 +46,9 @@ jobs:
 
 
 
+      # - name: Set dynamic branch name
+      #   run: "BRANCH_NAME=sitemap-$(date +'%Y%m%d%H%M%S')"
+
 
 
 
@@ -56,7 +61,7 @@ jobs:
           committer: github-actions[bot] <183369419+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: create-pull-request/sitemap-$(date +'%Y%m%d%H%M%S')
+          branch: ${{ env.BRANCH_NAME }}
           delete-branch: true
           title: "[Example] Update report"
           body: |
