@@ -21,22 +21,32 @@ jobs:
       - uses: actions/checkout@v4
 
       # - generate a mock sitemap in the ./Utilities folder
+      # - name: Generate mock sitemap
+      #   run: |
+      #     cat > Utilities/sitemap.xml <<EOL
+      #     <?xml version="1.0" encoding="UTF-8"?>
+      #     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      #       <url><loc>https://example.com/</loc></url>
+      #     </urlset>
+      #     EOL
+
       - name: Generate mock sitemap
         run: |
-          #mkdir -p Utilities
+          # Generate the basic sitemap
           cat > Utilities/sitemap.xml <<EOL
           <?xml version="1.0" encoding="UTF-8"?>
           <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            <url><loc>https://example.com/</loc></url>
+            <url>
+              <loc>https://example.com/</loc>
+              <lastmod>$(date +'%Y%m%d%H%M%S')</lastmod>
+            </url>
           </urlset>
           EOL
-
-      # compare 
+        
 
       # move the sitemap from ./Utilities to the ./app-directory/wwwroot folder, replacing the sitemap currently in there
       - name: Move sitemap to target directory
         run: |
-          #mkdir -p ./app-directory/wwwroot
           mv -f Utilities/sitemap.xml app-directory/wwwroot/sitemap.xml
 
 
@@ -55,7 +65,7 @@ jobs:
           committer: github-actions[bot] <183369419+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: create-pull-request/sitemap-12345
+          branch: create-pull-request/sitemap-1234
           delete-branch: true
           title: "Sitemap Change"
           body: |
