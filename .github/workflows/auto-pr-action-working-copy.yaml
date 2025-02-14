@@ -37,7 +37,7 @@ jobs:
       - name: Move sitemap to target directory
         run: |
           #mkdir -p ./app-directory/wwwroot
-          mv -f Utilities/sitemap.xml ./app-directory/wwwroot/sitemap.xml
+          mv -f Utilities/sitemap.xml app-directory/wwwroot/sitemap.xml
 
 
         # this script works
@@ -55,7 +55,7 @@ jobs:
           committer: github-actions[bot] <183369419+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: create-pull-request/sitemap-123456
+          branch: create-pull-request/sitemap-12345
           delete-branch: true
           title: "Sitemap Change"
           body: |
