@@ -50,6 +50,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         env:
           BRANCH_NAME: create-pull-request/sitemap-${{ github.run_id }}
+          PR_TITLE: Sitemap change $(date '+%A %d-%m-%Y')
         with:
           token: ${{ secrets.PAT_TOKEN }}
           commit-message: Sitemap latest updates
