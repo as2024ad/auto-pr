@@ -65,7 +65,7 @@ jobs:
           committer: github-actions[bot] <183369419+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: create-pull-request/sitemap-1234
+          branch: create-pull-request/sitemap-123
           delete-branch: true
           title: "Sitemap Change"
           body: |
