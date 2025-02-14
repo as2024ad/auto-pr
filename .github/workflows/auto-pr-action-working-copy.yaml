@@ -43,8 +43,8 @@ jobs:
       # - name: Set dynamic branch name
       #   run: echo "BRANCH_NAME=create-pull-request/sitemap-$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
-      - name: Set dynamic PR title with today's date
-        run: echo "PR_TITLE=Sitemap change $(date '+%A %-dth %B %Y')" >> $GITHUB_ENV
+      # - name: Set dynamic PR title with today's date
+      #   run: echo "PR_TITLE=Sitemap change $(date '+%A %-dth %B %Y')" >> $GITHUB_ENV
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
