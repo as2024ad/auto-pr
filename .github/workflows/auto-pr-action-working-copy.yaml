@@ -36,6 +36,7 @@ jobs:
           EOL
 
       # move the sitemap from ./Utilities to the ./app-directory/wwwroot folder, replacing the sitemap currently in there
+      # does this code remove the ./Utilities folder? It seems to dissapear when the GH Action runs:
       - name: Move sitemap to target directory
         run: |
           #mkdir -p ./app-directory/wwwroot
