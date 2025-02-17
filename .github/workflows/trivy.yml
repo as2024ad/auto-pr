@@ -19,8 +19,8 @@ jobs:
         with:
           scan-type: 'fs'
           ignore-unfixed: false
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+          format: 'table'
+          output: 'trivy-results.txt'
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
 
       - name: Print Trivy scan results
