@@ -8,6 +8,9 @@ namespace InsecureApp
     {
         static void Main(string[] args)
         {
+            // Vulnerability: Hardcoded Password
+            string hardcodedPassword = "SuperSecretPassword123";
+
             Console.Write("Enter your username: ");
             string username = Console.ReadLine();
 
@@ -33,6 +36,11 @@ namespace InsecureApp
             // Vulnerability: Path Traversal
             string fileContent = File.ReadAllText(filePath);
             Console.WriteLine(fileContent);
+
+            // Vulnerability: Hardcoded API Key
+            string apiKey = "12345-ABCDE-67890-FGHIJ";
+
+            Console.WriteLine($"Using hardcoded API key: {apiKey}");
         }
     }
 }
