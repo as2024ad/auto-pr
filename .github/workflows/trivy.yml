@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Trivy File Scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -19,7 +19,7 @@ jobs:
         with:
           scan-type: "fs"
           ignore-unfixed: false
-          format: "table"
+          format: "sarif"
           output: "trivy-results.sarif"
           severity: "CRITICAL,HIGH,MEDIUM,LOW"
           exit-code: 1
