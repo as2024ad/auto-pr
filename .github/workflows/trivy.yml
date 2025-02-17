@@ -21,7 +21,7 @@ jobs:
           ignore-unfixed: false
           format: 'sarif'
           output: 'trivy-results.sarif'
-          severity: 'MEDIUM'
+          severity: 'CRITICAL,HIGH,MEDIUM,LOW'
 
       - name: Print Trivy scan results
         run: cat trivy-results.sarif
