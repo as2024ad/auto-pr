@@ -22,9 +22,10 @@ jobs:
           format: 'table'
           output: 'trivy-results.txt'
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
+          exit-code: 1
 
       - name: Print Trivy scan results
-        run: cat trivy-results.sarif
+        run: cat trivy-results.txt
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
