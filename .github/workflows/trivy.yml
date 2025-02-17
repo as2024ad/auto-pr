@@ -32,7 +32,7 @@
 #       - name: Print Trivy scan results
 #         run: cat trivy-results.sarif
 
-name: Trivy
+name: build
 on:
   push:
     branches:
@@ -41,23 +41,26 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Manual Trivy Setup
-        uses: aquasecurity/setup-trivy@v0.2.0
-        with:
-          cache: true
-          version: v0.57.1
-
       - name: Run Trivy vulnerability scanner in repo mode
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.29.0
         with:
           scan-type: "fs"
           ignore-unfixed: true
           format: "sarif"
           output: "trivy-results.sarif"
           severity: "CRITICAL"
-          skip-setup-trivy: true
+          hide-progress: false
+          version: v0.57.1
+          scan-ref: '.'
+          cache: false
+
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: "trivy-results.sarif"
