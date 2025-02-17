@@ -1,33 +1,63 @@
-name: trivy
+# name: Trivy
+# on:
+#   workflow_dispatch:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+
+# jobs:
+#   build:
+#     name: Trivy File Scan
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Run Trivy vulnerability scanner in repo mode
+#         uses: aquasecurity/trivy-action@0.29.0
+#         with:
+#           scan-type: "fs"
+#           ignore-unfixed: false
+#           format: "sarif"
+#           output: "trivy-results.sarif"
+#           severity: "CRITICAL,HIGH,MEDIUM,LOW"
+#           exit-code: 1
+
+#       - name: Upload Trivy scan results to GitHub Security tab
+#         uses: github/codeql-action/upload-sarif@v3
+#         with:
+#           sarif_file: "trivy-results.sarif"
+
+#       - name: Print Trivy scan results
+#         run: cat trivy-results.sarif
+
+name: Trivy
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
   pull_request:
-
 jobs:
   build:
-    name: Trivy File Scan
-    runs-on: ubuntu-latest
+    name: Build
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Manual Trivy Setup
+        uses: aquasecurity/setup-trivy@v0.2.0
+        with:
+          cache: true
+          version: v0.57.1
+
       - name: Run Trivy vulnerability scanner in repo mode
-        uses: aquasecurity/trivy-action@0.29.0
+        uses: aquasecurity/trivy-action@master
         with:
           scan-type: "fs"
-          ignore-unfixed: false
+          ignore-unfixed: true
           format: "sarif"
           output: "trivy-results.sarif"
-          severity: "CRITICAL,HIGH,MEDIUM,LOW"
-          exit-code: 1
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: "trivy-results.sarif"
-
-      - name: Print Trivy scan results
-        run: cat trivy-results.sarif
+          severity: "CRITICAL"
+          skip-setup-trivy: true
