@@ -20,14 +20,14 @@ jobs:
           scan-type: "fs"
           ignore-unfixed: false
           format: "table"
-          output: "trivy-results.json"
+          output: "trivy-results.sarif"
           severity: "CRITICAL,HIGH,MEDIUM,LOW"
           exit-code: 1
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: "trivy-results.json"
+          sarif_file: "trivy-results.sarif"
 
       - name: Print Trivy scan results
-        run: cat trivy-results.json
+        run: cat trivy-results.sarif
