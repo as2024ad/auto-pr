@@ -33,6 +33,9 @@
 #         run: cat trivy-results.sarif
 
 name: Trivy Vulnerability latest
+permissions:
+  contents: read
+  pull-requests: write
 on:
   push:
     branches:
@@ -44,14 +47,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      # - name: Enable debug logging
-      #   run: echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
-
       - name: Checkout code
         uses: actions/checkout@v4     
 
-      - name: Run Trivy vulnerability scanner in repo mode
-        uses: aquasecurity/trivy-action@18f2510
+      - name: Run Trivy file scan
+        uses: aquasecurity/trivy-action@18f2510ee396bbf400402947b394f2dd8c87dbb0
         with:
           scan-type: 'fs'
           scan-ref: '.'          
@@ -63,18 +63,20 @@ jobs:
           vuln-type: os,library
           scanners: vuln,secret,misconfig,license
 
-      - name: Print Trivy scan results
-        run: cat trivy-results.sarif  
-
-      - name: Print current working directory
-        run: pwd
-
-      - name: List files in the current directory
-        run: ls -la   
-
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'trivy-results.sarif'
+
+      # - name: Print Trivy scan results
+      #   run: cat trivy-results.sarif  
+
+      # - name: Print current working directory
+      #   run: pwd
+
+      # - name: List files in the current directory
+      #   run: ls -la   
+
+
 
         
