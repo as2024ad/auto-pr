@@ -1,0 +1,41 @@
+name: Trivy Scan for Docker and Kubernetes Vulnerabilities
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  trivy_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Run Trivy Dockerfile scan
+      uses: aquasecurity/trivy-action@v0.4.0
+      with:
+        scan: 'dockerfile'
+        format: 'sarif'
+        output: 'dockerfile-scan-result.sarif'
+        severity: 'HIGH,CRITICAL'
+
+    - name: Run Trivy Kubernetes manifest scan
+      uses: aquasecurity/trivy-action@v0.4.0
+      with:
+        scan: 'k8s'
+        format: 'sarif'
+        output: 'k8s-scan-result.sarif'
+        severity: 'HIGH,CRITICAL'
+
+    - name: Upload SARIF reports as GitHub artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: trivy-scan-reports
+        path: |
+          dockerfile-scan-result.sarif
+          k8s-scan-result.sarif
