@@ -2,10 +2,26 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
+const crypto = require('crypto');
 
 // Hardcoded Credentials
 const hardcodedPassword = "VeryInsecurePassword123";
 const apiKey = "12345-ABCDE-67890-FGHIJ";
+
+// Insecure Encryption
+const encryptData = (data) => {
+    // Using an insecure encryption algorithm (e.g., DES)
+    const cipher = crypto.createCipher('des', '12345678');
+    let encrypted = cipher.update(data, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return encrypted;
+};
+
+// Deserialization Vulnerability - assuming a deserialized object could be tampered
+const deserializeData = (data) => {
+    // Using `eval` on user input, which can execute arbitrary code
+    return eval(data);
+};
 
 const server = http.createServer((req, res) => {
     const parsedUrl = url.parse(req.url, true);
@@ -45,6 +61,28 @@ const server = http.createServer((req, res) => {
                     res.end(data);
                 });
             });
+        }
+    } else if (pathname === '/login') {
+        // Missing Authentication/Authorization Vulnerability
+        // No authentication mechanism for this endpoint, hardcoded password used
+        const password = query.password || "";
+        if (password === hardcodedPassword) {
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('Login Successful');
+        } else {
+            res.writeHead(403, { 'Content-Type': 'text/plain' });
+            res.end('Forbidden');
+        }
+    } else if (pathname === '/secure-endpoint') {
+        // Broken Access Control
+        // No check on API key or user authentication
+        const apiKeyHeader = req.headers['x-api-key'] || "";
+        if (apiKeyHeader === apiKey) {
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('Access Granted');
+        } else {
+            res.writeHead(401, { 'Content-Type': 'text/plain' });
+            res.end('Unauthorized');
         }
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
