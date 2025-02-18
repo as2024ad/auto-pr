@@ -50,9 +50,9 @@ jobs:
         uses: aquasecurity/trivy-action@0.29.0
         with:
           scan-type: 'fs'
-          scan-ref: '.'          
+          scan-ref: '/github/workspace/'          
           ignore-unfixed: true
-          format: 'github-sarif'
+          format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
           exit-code: 0
@@ -63,3 +63,6 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'trivy-results.sarif'
+
+      - name: Print Trivy scan results
+        run: cat trivy-results.sarif          
