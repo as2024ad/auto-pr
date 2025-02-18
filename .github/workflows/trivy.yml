@@ -44,8 +44,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Enable debug logging
-        run: echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
+      # - name: Enable debug logging
+      #   run: echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
 
       - name: Checkout code
         uses: actions/checkout@v4     
@@ -61,7 +61,7 @@ jobs:
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
           exit-code: 0
           vuln-type: os,library
-          scanners: vuln,secret,misconfig,license,git,ci
+          scanners: vuln,secret,misconfig,license
 
       - name: Print Trivy scan results
         run: cat trivy-results.sarif  
