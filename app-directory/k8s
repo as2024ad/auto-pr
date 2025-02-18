@@ -1,41 +1,42 @@
-name: Trivy Scan for Docker and Kubernetes Vulnerabilities
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-jobs:
-  trivy_scan:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Run Trivy Dockerfile scan
-      uses: aquasecurity/trivy-action@v0.4.0
-      with:
-        scan: 'dockerfile'
-        format: 'sarif'
-        output: 'dockerfile-scan-result.sarif'
-        severity: 'HIGH,CRITICAL'
-
-    - name: Run Trivy Kubernetes manifest scan
-      uses: aquasecurity/trivy-action@v0.4.0
-      with:
-        scan: 'k8s'
-        format: 'sarif'
-        output: 'k8s-scan-result.sarif'
-        severity: 'HIGH,CRITICAL'
-
-    - name: Upload SARIF reports as GitHub artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: trivy-scan-reports
-        path: |
-          dockerfile-scan-result.sarif
-          k8s-scan-result.sarif
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vulnerable-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vulnerable-app
+  template:
+    metadata:
+      labels:
+        app: vulnerable-app
+    spec:
+      containers:
+      - name: vulnerable-app
+        image: node:6.9.1  # Vulnerable Node.js image
+        ports:
+        - containerPort: 80
+        securityContext:
+          runAsUser: 0  # Running as root user (not recommended)
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "1"
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vulnerable-service
+spec:
+  selector:
+    app: vulnerable-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort  # Exposes the service publicly on a node port (potential security risk)
