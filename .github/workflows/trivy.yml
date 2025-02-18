@@ -1,38 +1,4 @@
-# name: Trivy
-# on:
-#   workflow_dispatch:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
-
-# jobs:
-#   build:
-#     name: Trivy File Scan
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-
-#       - name: Run Trivy vulnerability scanner in repo mode
-#         uses: aquasecurity/trivy-action@0.29.0
-#         with:
-#           scan-type: "fs"
-#           ignore-unfixed: false
-#           format: "sarif"
-#           output: "trivy-results.sarif"
-#           severity: "CRITICAL,HIGH,MEDIUM,LOW"
-#           exit-code: 1
-
-#       - name: Upload Trivy scan results to GitHub Security tab
-#         uses: github/codeql-action/upload-sarif@v3
-#         with:
-#           sarif_file: "trivy-results.sarif"
-
-#       - name: Print Trivy scan results
-#         run: cat trivy-results.sarif
-
-name: Trivy Vulnerability latest
+name: Trivy Vulnerability Scan
 # permissions:
 #   contents: read
 #   pull-requests: write
@@ -41,6 +7,7 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:    
 jobs:
   build:
     name: Trivy File Scan
@@ -76,7 +43,3 @@ jobs:
 
       # - name: List files in the current directory
       #   run: ls -la   
-
-
-
-        
