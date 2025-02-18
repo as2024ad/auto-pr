@@ -55,13 +55,13 @@ jobs:
         with:
           scan-type: 'fs'
           scan-ref: '.'          
-          ignore-unfixed: true
+          ignore-unfixed: false
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
           exit-code: 0
-          vuln-type: os,library
-          scanners: vuln,secret,misconfig,license
+          vuln-type: os,library,config,docker,k8s
+          scanners: vuln,secret,misconfig,license,git,ci
 
       - name: Print Trivy scan results
         run: cat trivy-results.sarif  
