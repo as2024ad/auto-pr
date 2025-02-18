@@ -46,6 +46,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+
+      - name: Print current working directory
+        run: pwd
+
+      - name: List files in the current directory
+        run: ls -la        
+
       - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@0.29.0
         with:
