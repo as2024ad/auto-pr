@@ -60,7 +60,7 @@ jobs:
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
           exit-code: 0
-          vuln-type: os,library,config,docker,k8s
+          vuln-type: os,library
           scanners: vuln,secret,misconfig,license,git,ci
 
       - name: Print Trivy scan results
