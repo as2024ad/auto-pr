@@ -52,7 +52,7 @@ jobs:
           scan-type: 'fs'
           scan-ref: '.'          
           ignore-unfixed: true
-          format: 'github'
+          format: 'github-sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH,MEDIUM,LOW'
           exit-code: 0
