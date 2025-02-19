@@ -13,11 +13,11 @@ name: "CodeQL Advanced"
 
 on:
   push:
-    branches: [ "main", "CodeQL-Ruleset" ]
+    branches: [next, main]
   pull_request:
-    branches: [ "main", "CodeQL-Ruleset" ]
+    branches: [next, main]
   schedule:
-    - cron: '25 12 * * 4'
+    - cron: '0 0 * * *'
 
 jobs:
   analyze:
@@ -27,7 +27,7 @@ jobs:
     #   - https://gh.io/supported-runners-and-hardware-resources
     #   - https://gh.io/using-larger-runners (GitHub.com only)
     # Consider using larger runners or machines with greater resources for possible analysis time improvements.
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    runs-on: [ubuntu-latest]
     permissions:
       # required for all workflows
       security-events: write
@@ -98,4 +98,3 @@ jobs:
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:${{matrix.language}}"
-        
