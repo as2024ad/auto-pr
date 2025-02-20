@@ -8,7 +8,7 @@
 # We have attempted to detect the languages in your repository. Please check
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
-##############
+#
 name: "CodeQL Advanced"
 
 on:
@@ -43,8 +43,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - language: csharp
-          build-mode: none
+        - language: actions
+          build-mode: none          
+        # - language: csharp
+        #   build-mode: none
         - language: javascript-typescript
           build-mode: none
         # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
