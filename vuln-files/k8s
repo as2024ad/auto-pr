@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vulnerable-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vulnerable-app
+  template:
+    metadata:
+      labels:
+        app: vulnerable-app
+    spec:
+      containers:
+      - name: vulnerable-app
+        image: node:6.9.1  # Vulnerable Node.js image
+        ports:
+        - containerPort: 80
+        securityContext:
+          runAsUser: 0  # Running as root user (not recommended)
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "1"
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vulnerable-service
+spec:
+  selector:
+    app: vulnerable-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort  # Exposes the service publicly on a node port (potential security risk)
